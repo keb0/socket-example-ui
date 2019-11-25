@@ -1,0 +1,47 @@
+{
+  "name": "socket-example-ui",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --hot --inline --watch-content-base",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack -w"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.6.1",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/styles": "^4.6.0",
+    "axios": "^0.19.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hooks": "^1.0.1",
+    "socket.io": "^2.3.0",
+    "styled-components": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "@types/socket.io": "^2.1.4",
+    "@types/socket.io-client": "^1.4.32",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jest": "^23.0.4",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "1.7.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
