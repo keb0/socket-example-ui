@@ -2,6 +2,7 @@ import * as React from 'react';
 import Message from './Message';
 
 interface Message {
+  flg: number;
   message: string;
   time: string;
 }

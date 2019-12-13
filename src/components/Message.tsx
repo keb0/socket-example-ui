@@ -15,7 +15,7 @@ const Card = styled.div`
   }
 `;
 
-const Avater = styled.img`
+const Avatar = styled.img`
   float: left;
   max-width: 60px;
   width: 100%;
@@ -23,7 +23,26 @@ const Avater = styled.img`
   border-radius: 50%;
 `;
 
+const MyAvatar = styled.img`
+  float: right;
+  max-width: 60px;
+  margin-left: 20px;
+  margin-right: 0;
+  border-radius: 50%;
+`;
+
+const TimeText = styled.span`
+  float: right;
+  color: #aaa;
+`;
+
+const MyTimeText = styled.span`
+  float: left;
+  color: #999;
+`;
+
 interface Message {
+  flg: number;
   message: string;
   time: string;
 }
@@ -34,12 +53,20 @@ interface Props {
 
 export default function Message(props: Props) {
   const { message } = props;
+  const MessageCard =
+    message.flg === 0 ? (
+      <Card>
+        <MyAvatar src="/img/cat.png" />
+        <p>{message.message}</p>
+        <MyTimeText className="time-right">{message.time}</MyTimeText>
+      </Card>
+    ) : (
+      <Card>
+        <Avatar src="/img/car.png" />
+        <p>{message.message}</p>
+        <TimeText className="time-right">{message.time}</TimeText>
+      </Card>
+    );
 
-  return (
-    <Card>
-      {/* <img src="/w3images/bandmember.jpg" alt="Avatar"></img> */}
-      <p>{message.message}</p>
-      <span className="time-right">{message.time}</span>
-    </Card>
-  );
+  return <>{MessageCard}</>;
 }

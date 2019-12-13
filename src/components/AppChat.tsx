@@ -3,7 +3,7 @@ import moment from 'moment';
 import ChatBox from './ChatBox';
 import Form from './Form';
 
-const ws = new WebSocket('ws:localhost:5001');
+const ws = new WebSocket('ws:localhost:8000/ws/chat/aaa/');
 
 export default function AppChat() {
   const [messages, setMessages] = useState([]);
@@ -18,6 +18,7 @@ export default function AppChat() {
       setMessages([
         ...messages,
         {
+          flg: 0,
           message: toMessage,
           time: moment()
             .format('HH:mm:ss')
@@ -28,10 +29,13 @@ export default function AppChat() {
   }
 
   ws.onmessage = e => {
-    const recvMessage = e.data;
+    const data = JSON.parse(e.data);
+    const recvMessage = data['message'];
+
     setMessages([
       ...messages,
       {
+        flg: 1,
         message: recvMessage,
         time: moment()
           .format('HH:mm:ss')
