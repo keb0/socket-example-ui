@@ -30,7 +30,7 @@ export default function AppChat() {
 
   ws.onmessage = e => {
     const data = JSON.parse(e.data);
-    const recvMessage = data['message'];
+    const recvMessage = data.message;
 
     setMessages([
       ...messages,
