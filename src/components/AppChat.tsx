@@ -3,7 +3,7 @@ import moment from 'moment';
 import ChatBox from './ChatBox';
 import Form from './Form';
 
-const ws = new WebSocket('ws:localhost:8000/ws/chat/aaa/');
+const ws = new WebSocket('ws:localhost:8000/ws/chat/');
 
 export default function AppChat() {
   const [messages, setMessages] = useState([]);
