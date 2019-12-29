@@ -1,43 +1,66 @@
 import React, { useState, useEffect } from 'react';
 
-declare let MediaRecorder: any;
+declare const MediaRecorder: any;
+
+const ws = new WebSocket('ws:localhost:5001');
 
 export default function AppAudio() {
-  const [chunks, setChunks] = useState([]);
+  const [audio, setAudio] = useState([]);
+  const chunks = [];
 
-  useEffect(() => {});
+  useEffect(() => {
+    ws.onopen = () => {};
+  });
 
-  async function audioRecorder() {
+  function blobToArrayBuffer(blob: Blob) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.readAsArrayBuffer(blob);
+    });
+  }
+
+  function audioRecorder() {
     const constraints = { audio: true };
     const options = { mimeType: 'audio/ogg' };
 
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    const mediaRecorder = new MediaRecorder(stream, options);
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(stream => {
+        const mediaRecorder = new MediaRecorder(stream, options);
 
-    // ３秒後に停止
-    setTimeout(() => {
-      mediaRecorder.stop();
-      stream.getAudioTracks()[0].stop();
-    }, 3000);
+        // ３秒後に停止
+        setTimeout(() => {
+          mediaRecorder.stop();
+          stream.getAudioTracks()[0].stop();
+        }, 3000);
 
-    mediaRecorder.onstop = e => {
-      const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+        mediaRecorder.ondataavailable = e => {
+          chunks.push(e.data);
+        };
 
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'audio.ogg';
-      a.click();
-    };
+        mediaRecorder.onstop = async e => {
+          const blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+          const test = await blobToArrayBuffer(blob);
+          ws.send("aaa");
+          // ws.send(blob);
 
-    mediaRecorder.ondataavailable = e => {
-      setChunks([...chunks, e.data]);
-    };
+          // setAudio([...audio, blobToArrayBuffer(blob)]);
+        };
 
-    mediaRecorder.onerror = e => {
-      console.error(`error recording stream: ${e.error.name}`);
-    };
+        mediaRecorder.start();
 
-    mediaRecorder.start();
+        mediaRecorder.onerror = e => {
+          console.error(`error recording stream: ${e.error.name}`);
+        };
+      })
+      .catch(e => {
+        console.error(`error recording stream: ${e.error.name}`);
+      });
   }
 
   return (
@@ -45,8 +68,6 @@ export default function AppAudio() {
       <button type="button" onClick={() => audioRecorder()}>
         Click
       </button>
-
-      <a href="/#">Download</a>
     </div>
   );
 }

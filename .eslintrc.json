@@ -17,6 +17,7 @@
     }
   },
   "rules": {
+    "no-console": "off",
     "prettier/prettier": "error",
     "react/jsx-filename-extension": "off",
     "@typescript-eslint/explicit-function-return-type": "off"
